@@ -13,11 +13,11 @@ tests =
     it "sum single Elve calories" $ do
         Day01.solution "100\n200" `shouldBe` "300"
 
-    it "return max Elves' calories" $ do
-        Day01.solution "100\n200\n1\n\n50\n120" `shouldBe` "301"
+    it "return sum max 3 Elves' calories" $ do
+        Day01.solution "100\n200\n1\n\n50\n120\n\n10" `shouldBe` "481"
 
     it "example test" $ do
-        Day01.solution input `shouldBe` "24000"
+        Day01.solution input `shouldBe` "45000"
             where input = "1000\n\
                 \2000\n\
                 \3000\n\n\

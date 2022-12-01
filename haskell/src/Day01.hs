@@ -1,7 +1,11 @@
 module Day01 where
 
+import Data.List (sort)
+
 solution :: String -> String
-solution = show . maximum . map sumCalories . group . lines
+solution = show . sum . take 3 . reverse . sort . map sumCalories . group . lines
+
+
 
 sumCalories :: [String] -> Int
 sumCalories [] = 0
