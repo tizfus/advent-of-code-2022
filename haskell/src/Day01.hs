@@ -6,14 +6,14 @@ solutionPartOne :: String -> String
 solutionPartOne = 
     show. 
     maximum. 
-    elveCalories.
+    toElveCalories.
     lines
 
 solutionPartTwo :: String -> String
 solutionPartTwo = 
     show. 
     sumTopThree.
-    elveCalories. 
+    toElveCalories. 
     lines
 
 solution :: String -> String
@@ -25,11 +25,11 @@ sumTopThree = sum . take 3 . reverse . sort
 sumStrings :: [String] -> Int
 sumStrings = sum . map read
 
-elveCalories :: [String] -> [Int]
-elveCalories [] = []
-elveCalories calories =
+toElveCalories :: [String] -> [Int]
+toElveCalories [] = []
+toElveCalories calories =
     let (elveCalories, remainder) = break (== "") calories
-    in sumStrings elveCalories : elveCalories (tailSafe remainder)
+    in sumStrings elveCalories : toElveCalories (tailSafe remainder)
 
 tailSafe :: [a] -> [a]
 tailSafe [] = []
