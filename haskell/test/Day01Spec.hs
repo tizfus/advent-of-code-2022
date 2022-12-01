@@ -10,8 +10,25 @@ tests =
     it "return single number" $ do
         Day01.solution "100" `shouldBe` "100"
 
-    it "sum for a Elve" $ do
+    it "sum single Elve calories" $ do
         Day01.solution "100\n200" `shouldBe` "300"
 
-    it "sum Elves' calories" $ do
-        Day01.solution "100\n200\n\n50\n120" `shouldBe` "170"
+    it "return max Elves' calories" $ do
+        Day01.solution "100\n200\n1\n\n50\n120" `shouldBe` "301"
+
+    it "example test" $ do
+        Day01.solution input `shouldBe` "24000"
+            where input = "1000\n\
+                \2000\n\
+                \3000\n\n\
+
+                \4000\n\n\
+
+                \5000\n\
+                \6000\n\n\
+
+                \7000\n\
+                \8000\n\
+                \9000\n\n\
+
+                \10000"

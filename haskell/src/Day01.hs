@@ -1,9 +1,9 @@
 module Day01 where
 
 solution :: String -> String
-solution = show . last . map sumCalories . group . lines
+solution = show . maximum . map sumCalories . group . lines
 
-sumCalories :: (Read a, Num a) => [String] -> a
+sumCalories :: [String] -> Int
 sumCalories [] = 0
 sumCalories calories = sum . map read $ calories
 
