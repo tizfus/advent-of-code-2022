@@ -1,5 +1,5 @@
 module Day01 where
 
 solution :: String -> String
-solution values = values
+solution = show . sum . map read . words
 
