@@ -1,7 +1,9 @@
+import Day01
 import Test.Hspec
+import System.Environment (getArgs)
+import Data.Maybe (listToMaybe)
+import qualified Day01Spec
+
 
 main :: IO ()
-main = hspec $ do
-  describe "Prelude.head" $ do
-    it "returns the first element of a list" $ do
-      head [23 ..] `shouldBe` (23 :: Int)
+main = hspec $ Day01Spec.tests
