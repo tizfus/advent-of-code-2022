@@ -3,23 +3,33 @@ module Day01 where
 import Data.List (sort)
 
 solutionPartOne :: String -> String
-solutionPartOne = show . maximum . map sumCalories . group . lines
+solutionPartOne = 
+    show. 
+    maximum. 
+    elveCalories.
+    lines
 
 solutionPartTwo :: String -> String
-solutionPartTwo = show . sum . take 3 . reverse . sort . map sumCalories . group . lines
+solutionPartTwo = 
+    show. 
+    sumTopThree.
+    elveCalories. 
+    lines
 
 solution :: String -> String
 solution = solutionPartTwo
 
-sumCalories :: [String] -> Int
-sumCalories [] = 0
-sumCalories calories = sum . map read $ calories
+sumTopThree :: [Int] -> Int
+sumTopThree = sum . take 3 . reverse . sort
 
-group :: [String] -> [[String]]
-group [] = []
-group calories =
+sumStrings :: [String] -> Int
+sumStrings = sum . map read
+
+elveCalories :: [String] -> [Int]
+elveCalories [] = []
+elveCalories calories =
     let (elveCalories, remainder) = break (== "") calories
-    in elveCalories : group (tailSafe remainder)
+    in sumStrings elveCalories : elveCalories (tailSafe remainder)
 
 tailSafe :: [a] -> [a]
 tailSafe [] = []
