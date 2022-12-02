@@ -1,0 +1,1 @@
+docker run --rm -ti -v ${PWD}:/src mcr.microsoft.com/dotnet/sdk:7.0 bash
