@@ -10,11 +10,12 @@ public class Day01
             .ToString();
 
     public static string SolutionPartTwo(string rawCalories)
-        => SumCaloriesOfEachElves(rawCalories)
-            .OrderByDescending(calories => calories)
-            .Take(3)
+        => TakeHighestThree(SumCaloriesOfEachElves(rawCalories))
             .Sum()
             .ToString();
+
+    public static IEnumerable<int> TakeHighestThree(IEnumerable<int> elvesCalories)
+        => elvesCalories.OrderByDescending(calories => calories).Take(3);
 
     public static IEnumerable<string> SplitElvesCalories(string @string)
         => @string.Split("\n\n");
