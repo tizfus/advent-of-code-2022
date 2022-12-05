@@ -9,6 +9,13 @@ public class Day01
             .Max()
             .ToString();
 
+    public static string SolutionPartTwo(string rawCalories)
+        => SumCaloriesOfEachElves(rawCalories)
+            .OrderByDescending(calories => calories)
+            .Take(3)
+            .Sum()
+            .ToString();
+
     public static IEnumerable<string> SplitElvesCalories(string @string)
         => @string.Split("\n\n");
 

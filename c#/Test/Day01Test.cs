@@ -21,4 +21,18 @@ public class Day01Test
     {
         Assert.Equal("301", Day01.SolutionPartOne("100\n20\n50\n\n300\n1"));
     }
+
+    [Fact]
+    public void PartTwo_GivenCaloriesOfThreeElves_ReturnTheSum()
+    {
+        Assert.Equal("170", Day01.SolutionPartTwo("100\n\n20\n\n50"));
+    }
+
+        [Fact]
+    public void PartTwo_GivenCaloriesOfFourElves_ReturnTheSumOfTheHighestThree()
+    {
+        Assert.Equal("350", Day01.SolutionPartTwo("100\n\n20\n\n50\n\n200"));
+    }
+
+
 }
