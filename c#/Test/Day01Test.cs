@@ -15,4 +15,10 @@ public class Day01Test
     {
         Assert.Equal("350", Day01.SolutionPartOne("100\n200\n50"));
     }
+
+    [Fact]
+    public void PartOne_GivenCaloriesOfTheElves_ReturnTheHighestSum()
+    {
+        Assert.Equal("301", Day01.SolutionPartOne("100\n20\n50\n\n300\n1"));
+    }
 }
