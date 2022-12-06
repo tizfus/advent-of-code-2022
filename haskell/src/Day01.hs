@@ -1,4 +1,4 @@
-module Day01 (solution, solutionPartOne, solutionPartTwo) where
+module Day01 (solutionPartOne, solutionPartTwo) where
 
 import Data.List (sort)
 
@@ -6,18 +6,13 @@ solutionPartOne :: String -> String
 solutionPartOne = 
     show. 
     maximum. 
-    toElveCalories.
-    lines
+    splitElvesCalories
 
 solutionPartTwo :: String -> String
 solutionPartTwo = 
     show. 
     sumTopThree.
-    toElveCalories. 
-    lines
-
-solution :: String -> String
-solution = solutionPartTwo
+    splitElvesCalories
 
 sumTopThree :: [Int] -> Int
 sumTopThree = sum . take 3 . reverse . sort
@@ -25,12 +20,12 @@ sumTopThree = sum . take 3 . reverse . sort
 sumStrings :: [String] -> Int
 sumStrings = sum . map read
 
-toElveCalories :: [String] -> [Int]
-toElveCalories [] = []
-toElveCalories calories =
-    let (elveCalories, remainder) = break (== "") calories
-    in sumStrings elveCalories : toElveCalories (tailSafe remainder)
-
-tailSafe :: [a] -> [a]
-tailSafe [] = []
-tailSafe list = tail list
+splitElvesCalories :: String -> [Int]
+splitElvesCalories rawCalories =
+    buildElvesCalories $ lines rawCalories
+    where
+        buildElvesCalories :: [String] -> [Int]
+        buildElvesCalories [] = []
+        buildElvesCalories calories = 
+            let (elveCalories, othersCalories) = break (== "") calories
+            in sumStrings elveCalories : buildElvesCalories (drop 1 othersCalories)
