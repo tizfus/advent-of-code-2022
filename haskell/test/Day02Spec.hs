@@ -12,3 +12,8 @@ tests =
             Day02.solutionPartOne "A X" `shouldBe` "4"
             Day02.solutionPartOne "B Y" `shouldBe` "5"
             Day02.solutionPartOne "C Z" `shouldBe` "6"
+
+        it "round end winning" $ do
+            Day02.solutionPartOne "A Y" `shouldBe` "8"
+            Day02.solutionPartOne "B Z" `shouldBe` "9"
+            Day02.solutionPartOne "C X" `shouldBe` "7"
