@@ -25,5 +25,9 @@ scoreRound "A" "Y" = 6
 scoreRound "B" "Z" = 6
 scoreRound "C" "X" = 6
 
+scoreRound "A" "Z" = 0
+scoreRound "B" "X" = 0
+scoreRound "C" "Y" = 0
+
 solutionPartTwo :: String -> String
 solutionPartTwo = undefined
