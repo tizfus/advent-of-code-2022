@@ -2,9 +2,12 @@ module Day02 (solutionPartOne, solutionPartTwo) where
 
 
 solutionPartOne :: String -> String
-solutionPartOne round = 
-    let [elfChoise, myChoise] = words round
-    in show $ score elfChoise myChoise
+solutionPartOne = 
+    show
+    . sum
+    . map (\[elfChoise, myChoise] -> score elfChoise myChoise)
+    . map words
+    . lines
 
 score :: String -> String -> Int
 score elfChoise myChoise = 

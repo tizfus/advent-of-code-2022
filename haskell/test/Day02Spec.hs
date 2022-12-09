@@ -22,3 +22,7 @@ tests =
             Day02.solutionPartOne "A Z" `shouldBe` "3"
             Day02.solutionPartOne "B X" `shouldBe` "1"
             Day02.solutionPartOne "C Y" `shouldBe` "2"
+
+        it "sum scores multiple rounds" $ do
+            Day02.solutionPartOne "A Z\nA Y" `shouldBe` "11"
+            Day02.solutionPartOne "B X\nC Y" `shouldBe` "3"
