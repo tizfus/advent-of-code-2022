@@ -25,6 +25,7 @@ source-repository head
 library
   exposed-modules:
       Day01
+      Day02
   other-modules:
       Paths_advent_of_code
   hs-source-dirs:
@@ -51,6 +52,7 @@ test-suite advent-of-code-test
   main-is: Spec.hs
   other-modules:
       Day01Spec
+      Day02Spec
       Paths_advent_of_code
   hs-source-dirs:
       test
