@@ -1,36 +1,56 @@
 module Day02 (solutionPartOne, solutionPartTwo) where
 
+data Selection = Rock | Paper | Scissors
+type Round = (Selection, Selection)
 
 solutionPartOne :: String -> String
 solutionPartOne = 
     show
     . sum
-    . map (\[elfChoise, myChoise] -> score elfChoise myChoise)
-    . map words
-    . lines
+    . map (score `uncurry`)
+    . readRounds
 
-score :: String -> String -> Int
+readRounds :: String -> [Round]
+readRounds = map readRound . lines
+
+readRound :: String -> Round
+readRound raw =
+    let [elfChoise, myChoise] = map readSelection $ words raw
+    in (elfChoise, myChoise)
+
+readSelection :: String -> Selection
+readSelection "A" = Rock
+readSelection "X" = Rock
+
+readSelection "B" = Paper
+readSelection "Y" = Paper
+
+readSelection "C" = Scissors
+readSelection "Z" = Scissors
+
+score :: Selection -> Selection -> Int
 score elfChoise myChoise = 
     scoreChoise myChoise
     + scoreRound elfChoise myChoise
 
-scoreChoise :: String -> Int
-scoreChoise "X" = 1
-scoreChoise "Y" = 2
-scoreChoise "Z" = 3
+scoreChoise :: Selection -> Int
+scoreChoise Rock = 1
+scoreChoise Paper = 2
+scoreChoise Scissors = 3
 
-scoreRound :: String -> String -> Int
-scoreRound "A" "X" = 3
-scoreRound "B" "Y" = 3
-scoreRound "C" "Z" = 3
+scoreRound :: Selection -> Selection -> Int
+scoreRound Rock Rock = 3
+scoreRound Paper Paper = 3
+scoreRound Scissors Scissors = 3
 
-scoreRound "A" "Y" = 6
-scoreRound "B" "Z" = 6
-scoreRound "C" "X" = 6
+scoreRound Rock Paper = 6
+scoreRound Paper Scissors = 6
+scoreRound Scissors Rock = 6
 
-scoreRound "A" "Z" = 0
-scoreRound "B" "X" = 0
-scoreRound "C" "Y" = 0
+scoreRound Rock Scissors = 0
+scoreRound Paper Rock = 0
+scoreRound Scissors Paper = 0
+
 
 solutionPartTwo :: String -> String
 solutionPartTwo = undefined
