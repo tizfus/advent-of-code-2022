@@ -29,3 +29,23 @@ tests =
 
         it "example case" $ do
             Day02.solutionPartOne "A Y\nB X\nC Z" `shouldBe` "15"
+
+    describe "Part TWO:" $ do
+        it "round end in a raw" $ do
+            Day02.solutionPartTwo "A Y" `shouldBe` "4"
+            Day02.solutionPartTwo "B Y" `shouldBe` "5"
+            Day02.solutionPartTwo "C Y" `shouldBe` "6"
+
+        it "round end loosing" $ do
+            Day02.solutionPartTwo "A X" `shouldBe` "3"
+            Day02.solutionPartTwo "B X" `shouldBe` "1"
+            Day02.solutionPartTwo "C X" `shouldBe` "2"
+
+        it "round end winning" $ do
+            Day02.solutionPartTwo "A Z" `shouldBe` "8"
+            Day02.solutionPartTwo "B Z" `shouldBe` "9"
+            Day02.solutionPartTwo "C Z" `shouldBe` "7"
+
+        it "sum scores multiple rounds" $ do
+            Day02.solutionPartTwo "A Z\nA Y" `shouldBe` "12"
+            Day02.solutionPartTwo "B X\nC Z" `shouldBe` "8"

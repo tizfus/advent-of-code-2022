@@ -4,7 +4,6 @@ import System.IO
 
 main :: IO ()
 main = do
-    putStrLn "################### solutions..."
     day01
     day02
 
@@ -20,5 +19,5 @@ day02 = do
   input <- readFile "./app/input/day02"
   putStrLn $ "Day 02: "
   putStrLn $ "    Part One: " ++ Day02.solutionPartOne input
-  -- putStrLn $ "    Part Two: " ++ Day01.solutionPartTwo input
+  putStrLn $ "    Part Two: " ++ Day02.solutionPartTwo input
   

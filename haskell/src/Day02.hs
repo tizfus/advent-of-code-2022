@@ -53,4 +53,22 @@ scoreRound Scissors Paper = 0
 
 
 solutionPartTwo :: String -> String
-solutionPartTwo = undefined
+solutionPartTwo raw =
+    show
+    $ sum
+    $ (flip map) (lines raw) (\rawRound ->
+        case words rawRound of
+            [elfChoise, "X"] -> score (readSelection elfChoise) (loosingOpposite $ readSelection elfChoise)
+            [elfChoise, "Y"] -> score (readSelection elfChoise) (readSelection elfChoise)
+            [elfChoise, "Z"] -> score (readSelection elfChoise) (winningOpposite $ readSelection elfChoise)
+    )
+
+loosingOpposite :: Selection -> Selection
+loosingOpposite Rock = Scissors
+loosingOpposite Paper = Rock
+loosingOpposite Scissors = Paper
+
+winningOpposite :: Selection -> Selection
+winningOpposite Rock = Paper
+winningOpposite Paper = Scissors
+winningOpposite Scissors = Rock
