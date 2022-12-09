@@ -26,3 +26,6 @@ tests =
         it "sum scores multiple rounds" $ do
             Day02.solutionPartOne "A Z\nA Y" `shouldBe` "11"
             Day02.solutionPartOne "B X\nC Y" `shouldBe` "3"
+
+        it "example case" $ do
+            Day02.solutionPartOne "A Y\nB X\nC Z" `shouldBe` "15"
