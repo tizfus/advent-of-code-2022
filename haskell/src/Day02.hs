@@ -2,19 +2,24 @@ module Day02 (solutionPartOne, solutionPartTwo) where
 
 
 solutionPartOne :: String -> String
-solutionPartOne shape = 
-    case readAlias shape of
-        "Rock" -> "1"
-        "Paper" -> "2"
-        "Scissors" -> "3"
+solutionPartOne round = 
+    let [elfChoise, myChoise] = words round
+    in show $ score elfChoise myChoise
 
-readAlias :: String -> String
-readAlias "A" = "Rock"
-readAlias "X" = "Rock"
-readAlias "B" = "Paper"
-readAlias "Y" = "Paper"
-readAlias "C" = "Scissors"
-readAlias "Z" = "Scissors"
+score :: String -> String -> Int
+score elfChoise myChoise = 
+    scoreChoise myChoise
+    + scoreRound elfChoise myChoise
+
+scoreChoise :: String -> Int
+scoreChoise "X" = 1
+scoreChoise "Y" = 2
+scoreChoise "Z" = 3
+
+scoreRound :: String -> String -> Int
+scoreRound "A" "X" = 3
+scoreRound "B" "Y" = 3
+scoreRound "C" "Z" = 3
 
 solutionPartTwo :: String -> String
 solutionPartTwo = undefined
