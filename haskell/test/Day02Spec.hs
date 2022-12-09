@@ -8,12 +8,7 @@ tests :: Spec
 tests =
   describe "Day 02:" $ do
     describe "Part ONE:" $ do
-        it "recognize aliases" $ do
-            Day02.solutionPartOne "A" `shouldBe` "Rock"
-            Day02.solutionPartOne "X" `shouldBe` "Rock"
-
-            Day02.solutionPartOne "B" `shouldBe` "Paper"
-            Day02.solutionPartOne "Y" `shouldBe` "Paper"
-
-            Day02.solutionPartOne "C" `shouldBe` "Scissors"
-            Day02.solutionPartOne "Z" `shouldBe` "Scissors"
+        it "return score for the shape selected" $ do
+            Day02.solutionPartOne "X" `shouldBe` "1"
+            Day02.solutionPartOne "Y" `shouldBe` "2"
+            Day02.solutionPartOne "Z" `shouldBe` "3"

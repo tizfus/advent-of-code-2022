@@ -2,7 +2,11 @@ module Day02 (solutionPartOne, solutionPartTwo) where
 
 
 solutionPartOne :: String -> String
-solutionPartOne = readAlias
+solutionPartOne shape = 
+    case readAlias shape of
+        "Rock" -> "1"
+        "Paper" -> "2"
+        "Scissors" -> "3"
 
 readAlias :: String -> String
 readAlias "A" = "Rock"
