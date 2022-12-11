@@ -4,14 +4,17 @@ data Selection = Rock | Paper | Scissors
 type Round = (Selection, Selection)
 
 solutionPartOne :: String -> String
-solutionPartOne = 
+solutionPartOne = roundsResult readRound
+
+roundsResult :: (String -> Round) -> String -> String  
+roundsResult readRoundStrategy =
     show
     . sum
-    . map (score `uncurry`)
-    . readRounds
+    . map (uncurry score . readRoundStrategy)
+    . lines
 
-readRounds :: String -> [Round]
-readRounds = map readRound . lines
+readRounds :: (String -> Round) -> String -> [Round]
+readRounds strategy = map strategy . lines
 
 readRound :: String -> Round
 readRound raw =
@@ -52,23 +55,32 @@ scoreRound Paper Rock = 0
 scoreRound Scissors Paper = 0
 
 
+type Action = (Selection -> Selection)
+
 solutionPartTwo :: String -> String
-solutionPartTwo raw =
-    show
-    $ sum
-    $ (flip map) (lines raw) (\rawRound ->
-        case words rawRound of
-            [elfChoise, "X"] -> score (readSelection elfChoise) (loosingOpposite $ readSelection elfChoise)
-            [elfChoise, "Y"] -> score (readSelection elfChoise) (readSelection elfChoise)
-            [elfChoise, "Z"] -> score (readSelection elfChoise) (winningOpposite $ readSelection elfChoise)
-    )
+solutionPartTwo = roundsResult readRound2
 
-loosingOpposite :: Selection -> Selection
-loosingOpposite Rock = Scissors
-loosingOpposite Paper = Rock
-loosingOpposite Scissors = Paper
+readRound2 :: String -> Round
+readRound2 raw =
+    let [rawElfChoise, rawAction] = words raw
+        elfChoise = readSelection rawElfChoise
+        action = readAction rawAction
+    in (elfChoise, action elfChoise)
 
-winningOpposite :: Selection -> Selection
-winningOpposite Rock = Paper
-winningOpposite Paper = Scissors
-winningOpposite Scissors = Rock
+readAction :: String -> Action
+readAction "X" = loose
+readAction "Y" = draw
+readAction "Z" = win
+
+draw :: Selection -> Selection
+draw = id
+
+loose :: Selection -> Selection
+loose Rock = Scissors
+loose Paper = Rock
+loose Scissors = Paper
+
+win :: Selection -> Selection
+win Rock = Paper
+win Paper = Scissors
+win Scissors = Rock
