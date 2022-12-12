@@ -67,3 +67,11 @@ tests =
         
       it "return sum of multiple item priority" $ do
         Day03.solutionPartOne "aa\nbb" `shouldBe` "3"
+
+      it "example case" $ do
+        Day03.solutionPartOne "vJrwpWtwJgWrhcsFMMfFFhFp\n\
+\jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n\
+\PmmdzqPrVvPwwTWBwg\n\
+\wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n\
+\ttgJtRGJQctTZtZT\n\
+\CrZsJsPPZsGzwwsLwLmpwMDw" `shouldBe` "157"
