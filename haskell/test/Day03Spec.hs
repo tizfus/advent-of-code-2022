@@ -64,3 +64,6 @@ tests =
           `forM_` (\(input, expected) -> 
           it ("returns the priority value for " ++ input) $ do
             Day03.solutionPartOne input `shouldBe` expected)
+        
+      it "return sum of multiple item priority" $ do
+        Day03.solutionPartOne "aa\nbb" `shouldBe` "3"

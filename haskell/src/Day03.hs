@@ -10,13 +10,18 @@ type Item = Char
 solutionPartOne :: String -> String
 solutionPartOne =
     show
-    . priority
-    . uncurry findSameItem 
-    . compartments
+    . sum
+    . map calcPrioritySameItem
+    . lines
 
 solutionPartTwo :: String -> String
 solutionPartTwo = undefined
 
+calcPrioritySameItem :: RucksackItems -> Int
+calcPrioritySameItem = 
+    priority
+    . uncurry findSameItem 
+    . compartments
 
 compartments :: RucksackItems -> (Items, Items)
 compartments rucksack = splitAt (length rucksack `div` 2) rucksack
