@@ -7,19 +7,18 @@ type Items = String
 type Item = Char
 
 solutionPartOne :: String -> String
-solutionPartOne =
-    show
-    . sum
-    . map (calcPriorityCommonItem . compartments)
-    . lines
+solutionPartOne = calcPriorityRucksacks compartments
 
 solutionPartTwo :: String -> String
-solutionPartTwo =
+solutionPartTwo = calcPriorityRucksacks group
+
+calcPriorityRucksacks :: ([Items] -> [[Items]]) -> String -> String
+calcPriorityRucksacks strategy =
     show
     . sum
     . map calcPriorityCommonItem
-    . group
-    . lines
+    . strategy
+    . rucksacks
 
 group :: [Items] -> [[Items]]
 group [] = []
@@ -37,11 +36,15 @@ exists = elem
 calcPriorityCommonItem :: [Items] -> Int
 calcPriorityCommonItem = priority . findCommonItem 
 
-compartments :: Items -> [Items]
-compartments rucksack = 
-    let (firstCompartment, secondCompartment) = splitAt (length rucksack `div` 2) rucksack
-    in [firstCompartment, secondCompartment]
+compartments :: [Items] -> [[Items]]
+compartments rucksacks = 
+    (flip map) rucksacks $ (\rucksack ->
+        let (firstCompartment, secondCompartment) = splitAt (length rucksack `div` 2) rucksack
+        in [firstCompartment, secondCompartment]
+    )
 
+rucksacks :: String -> [String]
+rucksacks = lines
 
 priority :: Item -> Int
 priority =
