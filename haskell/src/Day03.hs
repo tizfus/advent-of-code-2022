@@ -16,8 +16,14 @@ solutionPartOne =
 solutionPartTwo :: String -> String
 solutionPartTwo =
     show
-    . calcPriorityCommonItem
+    . sum
+    . map calcPriorityCommonItem
+    . group
     . lines
+
+group :: [Items] -> [[Items]]
+group [] = []
+group (first:second:third:reminder) = [first, second, third] : group reminder
 
 findCommonItem :: [Items] -> Item
 findCommonItem listItems = 

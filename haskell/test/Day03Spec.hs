@@ -77,5 +77,16 @@ tests =
           \CrZsJsPPZsGzwwsLwLmpwMDw" 
         `shouldBe` "157"
     describe "Part TWO:" $ do
-      it "returns common item in a group" $ do
+      it "returns common item priority in a group" $ do
         Day03.solutionPartTwo "ab\nba\nca" `shouldBe` "1"
+
+      it "returns the sum of common item priority in multiple groups" $ do
+        Day03.solutionPartTwo "ab\nba\nca\ngh\nph\nhl" `shouldBe` "9"
+
+      it "example case" $ do
+        Day03.solutionPartTwo "vJrwpWtwJgWrhcsFMMfFFhFp\n\
+\jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n\
+\PmmdzqPrVvPwwTWBwg\n\
+\wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n\
+\ttgJtRGJQctTZtZT\n\
+\CrZsJsPPZsGzwwsLwLmpwMDw" `shouldBe` "70"
