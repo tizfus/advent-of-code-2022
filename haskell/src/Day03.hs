@@ -1,11 +1,18 @@
 module Day03 (solutionPartOne, solutionPartTwo) where
 
+import Data.List (elemIndex)
+import Data.Maybe (fromJust)
+
 type RucksackItems = String
 type Items = String
+type Item = Char
 
 solutionPartOne :: String -> String
-solutionPartOne rucksack =
-    uncurry findSameItem $ compartments rucksack
+solutionPartOne =
+    show
+    . priority
+    . uncurry findSameItem 
+    . compartments
 
 solutionPartTwo :: String -> String
 solutionPartTwo = undefined
@@ -14,6 +21,12 @@ solutionPartTwo = undefined
 compartments :: RucksackItems -> (Items, Items)
 compartments rucksack = splitAt (length rucksack `div` 2) rucksack
 
-findSameItem :: Items -> Items -> String
+findSameItem :: Items -> Items -> Item
 findSameItem firstCompartment secondCompartment =
-    filter (`elem` secondCompartment) firstCompartment
+    head $ filter (`elem` secondCompartment) firstCompartment
+
+priority :: Item -> Int
+priority =
+    (+1)
+    . fromJust
+    . (flip elemIndex) (['a'..'z'] ++ ['A'..'Z'])
