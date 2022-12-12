@@ -3,7 +3,6 @@ module Day03 (solutionPartOne, solutionPartTwo) where
 import Data.List (elemIndex)
 import Data.Maybe (fromJust)
 
-type RucksackItems = String
 type Items = String
 type Item = Char
 
@@ -11,24 +10,32 @@ solutionPartOne :: String -> String
 solutionPartOne =
     show
     . sum
-    . map calcPrioritySameItem
+    . map (calcPriorityCommonItem . compartments)
     . lines
 
 solutionPartTwo :: String -> String
-solutionPartTwo _ = "TODO"
+solutionPartTwo =
+    show
+    . calcPriorityCommonItem
+    . lines
 
-calcPrioritySameItem :: RucksackItems -> Int
-calcPrioritySameItem = 
-    priority
-    . uncurry findSameItem 
-    . compartments
+findCommonItem :: [Items] -> Item
+findCommonItem listItems = 
+    let sampleList = head listItems
+        reminderListItems = tail listItems
+    in head $ filter (\item -> exists item `all` reminderListItems) sampleList
 
-compartments :: RucksackItems -> (Items, Items)
-compartments rucksack = splitAt (length rucksack `div` 2) rucksack
+exists :: Item -> Items -> Bool 
+exists = elem
 
-findSameItem :: Items -> Items -> Item
-findSameItem firstCompartment secondCompartment =
-    head $ filter (`elem` secondCompartment) firstCompartment
+calcPriorityCommonItem :: [Items] -> Int
+calcPriorityCommonItem = priority . findCommonItem 
+
+compartments :: Items -> [Items]
+compartments rucksack = 
+    let (firstCompartment, secondCompartment) = splitAt (length rucksack `div` 2) rucksack
+    in [firstCompartment, secondCompartment]
+
 
 priority :: Item -> Int
 priority =

@@ -70,8 +70,12 @@ tests =
 
       it "example case" $ do
         Day03.solutionPartOne "vJrwpWtwJgWrhcsFMMfFFhFp\n\
-\jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n\
-\PmmdzqPrVvPwwTWBwg\n\
-\wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n\
-\ttgJtRGJQctTZtZT\n\
-\CrZsJsPPZsGzwwsLwLmpwMDw" `shouldBe` "157"
+          \jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n\
+          \PmmdzqPrVvPwwTWBwg\n\
+          \wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n\
+          \ttgJtRGJQctTZtZT\n\
+          \CrZsJsPPZsGzwwsLwLmpwMDw" 
+        `shouldBe` "157"
+    describe "Part TWO:" $ do
+      it "returns common item in a group" $ do
+        Day03.solutionPartTwo "ab\nba\nca" `shouldBe` "1"
