@@ -1,11 +1,13 @@
 import qualified Day01
 import qualified Day02
+import qualified Day03
 import System.IO 
 
 main :: IO ()
 main = do
     day01
     day02
+    day03
 
 day01 :: IO ()
 day01 = do
@@ -20,4 +22,11 @@ day02 = do
   putStrLn $ "Day 02: "
   putStrLn $ "    Part One: " ++ Day02.solutionPartOne input
   putStrLn $ "    Part Two: " ++ Day02.solutionPartTwo input
+
+day03 :: IO ()
+day03 = do
+  input <- readFile "./app/input/day03"
+  putStrLn $ "Day 03: "
+  putStrLn $ "    Part One: " ++ Day03.solutionPartOne input
+  putStrLn $ "    Part Two: " ++ Day03.solutionPartTwo input
   

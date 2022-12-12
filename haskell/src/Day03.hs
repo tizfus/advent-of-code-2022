@@ -15,7 +15,7 @@ solutionPartOne =
     . lines
 
 solutionPartTwo :: String -> String
-solutionPartTwo = undefined
+solutionPartTwo _ = "TODO"
 
 calcPrioritySameItem :: RucksackItems -> Int
 calcPrioritySameItem = 
