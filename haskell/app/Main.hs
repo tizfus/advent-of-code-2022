@@ -1,7 +1,6 @@
 import qualified Day01
 import qualified Day02
 import qualified Day03
-import System.IO 
 
 main :: IO ()
 main = do

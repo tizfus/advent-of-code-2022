@@ -23,6 +23,7 @@ calcPriorityRucksacks strategy =
 group :: [Items] -> [[Items]]
 group [] = []
 group (first:second:third:reminder) = [first, second, third] : group reminder
+group _ = error "uh-oh!"
 
 findCommonItem :: [Items] -> Item
 findCommonItem listItems = 
@@ -37,8 +38,8 @@ calcPriorityCommonItem :: [Items] -> Int
 calcPriorityCommonItem = priority . findCommonItem 
 
 compartments :: [Items] -> [[Items]]
-compartments rucksacks = 
-    (flip map) rucksacks $ (\rucksack ->
+compartments = 
+    map (\rucksack ->
         let (firstCompartment, secondCompartment) = splitAt (length rucksack `div` 2) rucksack
         in [firstCompartment, secondCompartment]
     )
