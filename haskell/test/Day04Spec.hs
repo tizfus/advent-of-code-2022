@@ -8,9 +8,5 @@ tests :: Spec
 tests =
   describe "Day 04:" $ do
     describe "Part ONE:" $ do
-        it "TODO" $ do
-            "TODO" `shouldBe` "TODO"
-    
-    describe "Part TWO:" $ do
-        it "TODO" $ do
-            "TODO" `shouldBe` "TODO"
+        it "split assignemnts" $ do
+            Day04.solutionPartOne "2-2,2-2" `shouldBe` "[2-2,2-2]"
