@@ -29,3 +29,12 @@ tests =
           Day04.solutionPartOne "1-7,1-2\n2-4,1-5" `shouldBe` "2"
 
           Day04.solutionPartOne "1-2,3-4\n3-5,1-2" `shouldBe` "0"
+
+        it "example case" $ do
+          Day04.solutionPartOne "2-4,6-8\n\
+            \2-3,4-5\n\
+            \5-7,7-9\n\
+            \2-8,3-7\n\
+            \6-6,4-6\n\
+            \2-6,4-8" 
+          `shouldBe` "2"
