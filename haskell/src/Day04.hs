@@ -9,8 +9,9 @@ solutionPartOne rawPair =
 
 contains :: Sections -> Sections -> Bool
 contains firstSection secondSection =
-    (fst firstSection) <= (fst secondSection)
-    && (snd firstSection) >= (snd secondSection)
+    (fst firstSection) <= (fst secondSection) && (snd firstSection) >= (snd secondSection) 
+    || (fst secondSection) <= (fst firstSection) && (snd secondSection) >= (snd firstSection) 
+    
 
 readPair :: String -> (Sections, Sections)
 readPair = mapTuple readSections . splitBy ','
