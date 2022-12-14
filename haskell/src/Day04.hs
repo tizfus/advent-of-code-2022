@@ -13,16 +13,16 @@ contains firstSection secondSection =
     && (snd firstSection) >= (snd secondSection)
 
 readPair :: String -> (Sections, Sections)
-readPair = tupleMap readSections readSections . splitBy ','
+readPair = mapTuple readSections . splitBy ','
 
 readSections :: String -> Sections
-readSections = tupleMap read read . splitBy '-'
+readSections = mapTuple read . splitBy '-'
 
 splitBy :: Char -> String -> (String, String)
 splitBy char = fmap (tail) . break (== char)
 
-tupleMap :: (a -> c) -> (b -> d) -> (a, b) -> (c, d)
-tupleMap fstMap sndMap (fst, snd) = (fstMap fst, sndMap snd)
+mapTuple :: (a -> b) -> (a, a) -> (b, b)
+mapTuple map (fst, snd) = (map fst, map snd)
 
 solutionPartTwo :: String -> String
 solutionPartTwo _ = "TODO"
