@@ -44,3 +44,12 @@ tests =
         Day04.solutionPartTwo "1-2,2-3" `shouldBe` "1"
         Day04.solutionPartTwo "1-3,2-4" `shouldBe` "1"
         Day04.solutionPartTwo "1-3,4-5" `shouldBe` "0"
+
+      it "example case" $ do
+        Day04.solutionPartTwo "2-4,6-8\n\
+          \2-3,4-5\n\
+          \5-7,7-9\n\
+          \2-8,3-7\n\
+          \6-6,4-6\n\
+          \2-6,4-8" 
+        `shouldBe` "4"
