@@ -8,7 +8,7 @@ tests :: Spec
 tests =
   describe "Day 04:" $ do
     describe "Part ONE:" $ do
-        it "finds if one assignments contain the other" $ do
+        it "finds if one assignment contains the other" $ do
             Day04.solutionPartOne "2-2,2-2" `shouldBe` "1"
             
             Day04.solutionPartOne "1-2,2-2" `shouldBe` "1"
@@ -38,3 +38,9 @@ tests =
             \6-6,4-6\n\
             \2-6,4-8" 
           `shouldBe` "2"
+     
+    describe "Part TWO:" $ do
+      it "finds if a assignment overlap with the other" $ do
+        Day04.solutionPartTwo "1-2,2-3" `shouldBe` "1"
+        Day04.solutionPartTwo "1-3,2-4" `shouldBe` "1"
+        Day04.solutionPartTwo "1-3,4-5" `shouldBe` "0"

@@ -15,6 +15,12 @@ contains firstSection secondSection
     | (fst firstSection) <= (fst secondSection) && (snd firstSection) >= (snd secondSection) = 1
     | (fst secondSection) <= (fst firstSection) && (snd secondSection) >= (snd firstSection) = 1
     | otherwise = 0
+
+contains2 :: Sections -> Sections -> Int
+contains2 firstSection secondSection =
+    if any (`elem` [(fst firstSection)..(snd firstSection)]) [(fst secondSection)..(snd secondSection)]
+    then 1
+    else 0
     
 
 readPair :: String -> (Sections, Sections)
@@ -30,4 +36,9 @@ mapTuple :: (a -> b) -> (a, a) -> (b, b)
 mapTuple map (fst, snd) = (map fst, map snd)
 
 solutionPartTwo :: String -> String
-solutionPartTwo _ = "TODO"
+solutionPartTwo =
+    show
+    . sum
+    . map (uncurry contains2)
+    . map readPair
+    . lines
