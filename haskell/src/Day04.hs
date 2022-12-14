@@ -3,9 +3,12 @@ module Day04 where
 type Sections = (Int, Int)
 
 solutionPartOne :: String -> String
-solutionPartOne rawPair = 
-    let (firstSection, secondSection) = readPair rawPair
-    in show (contains firstSection secondSection)
+solutionPartOne = 
+    show
+    . sum
+    . map (uncurry contains)
+    . map readPair
+    . lines
 
 contains :: Sections -> Sections -> Int
 contains firstSection secondSection
