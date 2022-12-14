@@ -7,10 +7,11 @@ solutionPartOne rawPair =
     let (firstSection, secondSection) = readPair rawPair
     in show (contains firstSection secondSection)
 
-contains :: Sections -> Sections -> Bool
-contains firstSection secondSection =
-    (fst firstSection) <= (fst secondSection) && (snd firstSection) >= (snd secondSection) 
-    || (fst secondSection) <= (fst firstSection) && (snd secondSection) >= (snd firstSection) 
+contains :: Sections -> Sections -> Int
+contains firstSection secondSection
+    | (fst firstSection) <= (fst secondSection) && (snd firstSection) >= (snd secondSection) = 1
+    | (fst secondSection) <= (fst firstSection) && (snd secondSection) >= (snd firstSection) = 1
+    | otherwise = 0
     
 
 readPair :: String -> (Sections, Sections)
