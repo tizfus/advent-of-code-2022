@@ -9,3 +9,4 @@ tests =
         describe "Part ONE:" $ do
             it "recognizes first row" $ do
                 Day05.solutionPartOne "    [D]    " `shouldBe` "[Nothing,Just 'D',Nothing]"
+                Day05.solutionPartOne "    [D]     [C]" `shouldBe` "[Nothing,Just 'D',Nothing,Just 'C']"
