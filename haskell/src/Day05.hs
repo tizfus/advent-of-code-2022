@@ -1,8 +1,10 @@
 module Day05 where
 
 solutionPartOne :: String -> String
-solutionPartOne raw =
-    show $ readCreates raw
+solutionPartOne =
+    show
+    . map readCreates
+    . lines
 
 readCreates :: String -> [Maybe Char]
 readCreates "" = []
