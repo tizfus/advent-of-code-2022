@@ -1,43 +1,23 @@
 module Day05 where
 
 solutionPartOne :: String -> String
-solutionPartOne =
-    show
-    . readStacks []
+solutionPartOne = show . readStacks
 
-readStacks :: [[String]] -> String -> [[String]]
-readStacks stacks "" = stacks
-readStacks stacks raw =
-    let (row, remainder) = span (/='\n') raw
-        creates = readCreates row
-    in readStacks (addCreates stacks creates) (drop 1 remainder)
+readStacks :: String -> [[String]]
+readStacks =  readStack 0 . lines
 
-addCreates :: [[String]] -> [[String]] -> [[String]]
-addCreates [] creates = creates
-addCreates stacks creates = 
-    mapIndexed (\index stack -> stack ++ creates !! index) stacks
-
-
-mapIndexed :: (Int -> a -> b) -> [a] -> [b]
-mapIndexed map = mapIndexed' map 0
+readStack :: Int -> [String] -> [[String]]
+readStack index raw =
+    if hasEmptyValue values
+        then []
+        else (readCreate values) : (readStack (index + 1) raw)
     where
-        mapIndexed' :: (Int -> a -> b) -> Int -> [a] -> [b]
-        mapIndexed' _ _ [] = []
-        mapIndexed' map index list =
-            map index (list !! 0) : (mapIndexed' map (index + 1) (tail list) )
+        hasEmptyValue = any (""==)
+        values = map takeValues raw
+        takeValues = take 4 . drop (index * 4)
+    
 
-     
-
-readCreates :: String -> [[String]]
-readCreates "" = []
-readCreates raw = 
-    case readCreate $ take 4 raw of
-        Nothing -> [] : (readCreates $ drop 4 raw)
-        Just create -> [create] : (readCreates $ drop 4 raw)
-
-readCreate :: String -> Maybe String
-readCreate rawCreate
-    | all (==' ') rawCreate = Nothing
-    | otherwise = Just [rawCreate !! 1]
-
-
+readCreate :: [String] -> [String]
+readCreate = 
+    map (\value -> [value !! 1]) 
+    . filter (any (/=' '))
