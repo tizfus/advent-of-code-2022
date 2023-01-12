@@ -5,14 +5,14 @@ solutionPartOne =
     show
     . readStacks []
 
-readStacks :: [[Maybe String]] -> String -> [[Maybe String]]
+readStacks :: [[String]] -> String -> [[String]]
 readStacks stacks "" = stacks
 readStacks stacks raw =
     let (row, remainder) = span (/='\n') raw
         creates = readCreates row
     in readStacks (addCreates stacks creates) (drop 1 remainder)
 
-addCreates :: [[Maybe String]] -> [[Maybe String]] -> [[Maybe String]]
+addCreates :: [[String]] -> [[String]] -> [[String]]
 addCreates [] creates = creates
 addCreates stacks creates = 
     mapIndexed (\index stack -> stack ++ creates !! index) stacks
@@ -28,10 +28,12 @@ mapIndexed map = mapIndexed' map 0
 
      
 
-readCreates :: String -> [[Maybe String]]
+readCreates :: String -> [[String]]
 readCreates "" = []
 readCreates raw = 
-    [readCreate $ take 4 raw] : (readCreates $ drop 4 raw)
+    case readCreate $ take 4 raw of
+        Nothing -> [] : (readCreates $ drop 4 raw)
+        Just create -> [create] : (readCreates $ drop 4 raw)
 
 readCreate :: String -> Maybe String
 readCreate rawCreate
