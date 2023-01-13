@@ -26,8 +26,11 @@ readInput =
 
 changePosition :: [String] -> Stacks -> Stacks
 changePosition [] stacks = stacks
-changePosition (movement:_) stacks = 
-    applyMove (readMove movement) stacks
+changePosition rawMovements stacks = 
+    foldr 
+        applyMove 
+        stacks 
+        (map readMove rawMovements)
 
 applyMove :: Move -> Stacks -> Stacks
 applyMove (Move count stackFrom stackTo) stacks =
@@ -36,9 +39,13 @@ applyMove (Move count stackFrom stackTo) stacks =
             if index == stackFrom
                 then drop count stack
                 else if index == stackTo
-                    then creates ++ stack
+                    then addCreate creates stack
                     else stack
         ) stacks
+
+addCreate :: [Create] -> Stack -> Stack
+addCreate [] stack = stack
+addCreate (create:creates) stack = addCreate creates $ create : stack
 
 readMove :: String -> Move
 readMove raw =
