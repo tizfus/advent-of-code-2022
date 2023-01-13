@@ -18,6 +18,7 @@ solutionPartOne input =
     let (rawStacks, rawMovements) = readInput input
     in 
         show 
+        $ map head
         $ filter (not . isEmpty)
         $ moveAll
             (readMovements rawMovements)
