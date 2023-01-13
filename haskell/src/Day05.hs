@@ -15,8 +15,11 @@ data Move = Move {
 
 solutionPartOne :: String -> String
 solutionPartOne input = 
-    let (rawStacks, positionsInfo) = readInput input
-    in show $ changePosition positionsInfo $ readStacks rawStacks
+    let (rawStacks, rawMovements) = readInput input
+    in 
+        show $ moveAll
+            (readMovements rawMovements)
+            (readStacks rawStacks)
 
 readInput :: String -> ([String], [String])
 readInput = 
@@ -24,16 +27,19 @@ readInput =
     . break isEmpty 
     . lines 
 
-changePosition :: [String] -> Stacks -> Stacks
-changePosition [] stacks = stacks
-changePosition rawMovements stacks = 
-    foldr 
-        applyMove 
-        stacks 
-        (map readMove rawMovements)
+readMovements :: [String] -> [Move]
+readMovements = map readMovement 
 
-applyMove :: Move -> Stacks -> Stacks
-applyMove (Move count stackFrom stackTo) stacks =
+moveAll :: [Move] -> Stacks -> Stacks
+moveAll [] stacks = stacks
+moveAll movements stacks = 
+    foldr 
+        move 
+        stacks 
+        movements
+
+move :: Move -> Stacks -> Stacks
+move (Move count stackFrom stackTo) stacks =
     let creates = take count (stacks !! stackFrom)
     in mapIndexed (\index stack ->
             if index == stackFrom
@@ -47,8 +53,8 @@ addCreate :: [Create] -> Stack -> Stack
 addCreate [] stack = stack
 addCreate (create:creates) stack = addCreate creates $ create : stack
 
-readMove :: String -> Move
-readMove raw =
+readMovement :: String -> Move
+readMovement raw =
     let [count, stackFrom, stackTo] = map read $ filter (all Char.isDigit) $ words raw
     in Move count (stackFrom - 1) (stackTo - 1)
 
@@ -67,8 +73,8 @@ readStack index raw =
         ("":_) -> Nothing
         rawCreates -> Just $ Maybe.catMaybes $ map readCreate rawCreates
 
-isEmpty :: String -> Bool
-isEmpty "" = True
+isEmpty :: [a] -> Bool
+isEmpty [] = True
 isEmpty _ = False
 
 readCreate :: String -> Maybe Create
