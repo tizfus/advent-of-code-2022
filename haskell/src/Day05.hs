@@ -7,34 +7,47 @@ type Create = String
 type Stack = [Create]
 type Stacks = [Stack]
 
-data Move = Move {
-    count :: Int,
-    stackFrom :: Int,
-    stackTo :: Int
-}
+data Move = 
+    Move9000 Int Int Int
+    | Move9001 Int Int Int
 
 solutionPartOne :: String -> String
 solutionPartOne input = 
     let (rawStacks, rawMovements) = readInput input
     in 
         prettify $ moveAll
-            (readMovements rawMovements)
+            (readMovements Move9000 rawMovements)
+            (readStacks rawStacks)
+
+solutionPartTwo :: String -> String
+solutionPartTwo input = 
+    let (rawStacks, rawMovements) = readInput input
+    in 
+        prettify $ moveAll
+            (readMovements Move9001 rawMovements)
             (readStacks rawStacks)
 
 prettify :: Stacks -> String
 prettify =
     concat 
     . map head
-    . filter (not . isEmpty)
+    . filter (not . null)
 
 readInput :: String -> ([String], [String])
 readInput = 
     fmap (drop 1) 
-    . break isEmpty 
+    . break null 
     . lines 
 
-readMovements :: [String] -> [Move]
-readMovements = map readMovement 
+readMovements :: (Int -> Int -> Int -> Move) -> [String] -> [Move]
+readMovements _ [] = []
+readMovements builder (movement:movements) = 
+    let [count, stackFrom, stackTo] = 
+            map read 
+            $ filter (all Char.isDigit) 
+            $ words movement
+    in builder count (stackFrom - 1) (stackTo - 1)
+        : readMovements builder movements
 
 moveAll :: [Move] -> Stacks -> Stacks
 moveAll [] stacks = stacks
@@ -42,24 +55,24 @@ moveAll (movement:movements) stacks =
     moveAll movements $ move movement stacks
 
 move :: Move -> Stacks -> Stacks
-move (Move count stackFrom stackTo) stacks =
+move (Move9001 count stackFrom stackTo) stacks =
     let creates = take count (stacks !! stackFrom)
     in mapIndexed (\index stack ->
             if index == stackFrom
                 then drop count stack
                 else if index == stackTo
-                    then addCreate creates stack
+                    then creates ++ stack
                     else stack
         ) stacks
-
-addCreate :: [Create] -> Stack -> Stack
-addCreate [] stack = stack
-addCreate (create:creates) stack = addCreate creates $ create : stack
-
-readMovement :: String -> Move
-readMovement raw =
-    let [count, stackFrom, stackTo] = map read $ filter (all Char.isDigit) $ words raw
-    in Move count (stackFrom - 1) (stackTo - 1)
+move (Move9000 count stackFrom stackTo) stacks =
+    let creates = take count (stacks !! stackFrom)
+    in mapIndexed (\index stack ->
+            if index == stackFrom
+                then drop count stack
+                else if index == stackTo
+                    then (reverse creates) ++ stack
+                    else stack
+        ) stacks
 
 readStacks :: [String] -> Stacks
 readStacks =  readStacks' 0 . init
@@ -75,10 +88,6 @@ readStack index raw =
     case map (drop (index * 4)) raw of
         ("":_) -> Nothing
         rawCreates -> Just $ Maybe.catMaybes $ map readCreate rawCreates
-
-isEmpty :: [a] -> Bool
-isEmpty [] = True
-isEmpty _ = False
 
 readCreate :: String -> Maybe Create
 readCreate value = 
