@@ -17,7 +17,9 @@ solutionPartOne :: String -> String
 solutionPartOne input = 
     let (rawStacks, rawMovements) = readInput input
     in 
-        show $ moveAll
+        show 
+        $ filter (not . isEmpty)
+        $ moveAll
             (readMovements rawMovements)
             (readStacks rawStacks)
 
