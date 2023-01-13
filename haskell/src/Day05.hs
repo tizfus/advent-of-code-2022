@@ -17,12 +17,15 @@ solutionPartOne :: String -> String
 solutionPartOne input = 
     let (rawStacks, rawMovements) = readInput input
     in 
-        show 
-        $ map head
-        $ filter (not . isEmpty)
-        $ moveAll
+        prettify $ moveAll
             (readMovements rawMovements)
             (readStacks rawStacks)
+
+prettify :: Stacks -> String
+prettify =
+    concat 
+    . map head
+    . filter (not . isEmpty)
 
 readInput :: String -> ([String], [String])
 readInput = 
