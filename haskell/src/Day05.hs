@@ -1,6 +1,7 @@
 module Day05 where
 
 import qualified Data.Char as Char
+import qualified Data.Maybe as Maybe
 
 type Create = String
 type Stack = [Create]
@@ -25,23 +26,26 @@ changePosition (movements:_) stacks =
     in [containers, [], [] ]
 
 readStacks :: [String] -> Stacks
-readStacks =  readStack 0 . init
-
-readStack :: Int -> [String] -> Stacks
-readStack index raw =
-    if hasEmptyValue values
-        then []
-        else (readCreate values) : (readStack (index + 1) raw)
+readStacks =  readStacks' 0 . init
     where
-        hasEmptyValue = any isEmpty
-        values = map takeValues raw
-        takeValues = take 4 . drop (index * 4)
+        readStacks' :: Int -> [String] -> Stacks
+        readStacks' index raw =
+            case readStack' index raw of
+                Nothing -> []
+                Just stack -> stack : (readStacks' (index + 1) raw)
+
+readStack' :: Int -> [String] -> Maybe Stack
+readStack' index raw =
+    case map (drop (index * 4)) raw of
+        ("":_) -> Nothing
+        rawCreates -> Just $ Maybe.catMaybes $ map readCreate rawCreates
 
 isEmpty :: String -> Bool
 isEmpty "" = True
 isEmpty _ = False
 
-readCreate :: [String] -> Stack
-readCreate = 
-    map (\value -> [value !! 1]) 
-    . filter (any (/=' '))
+readCreate :: String -> Maybe Create
+readCreate value = 
+    case value !! 1 of
+        ' '-> Nothing
+        create -> Just [create]
