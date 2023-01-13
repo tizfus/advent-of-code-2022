@@ -45,4 +45,5 @@ day05 = do
   input <- readFile "./app/input/day05"
   putStrLn $ "Day 05: "
   putStrLn $ "    Part One: " ++ Day05.solutionPartOne input
+  putStrLn $ "    Part Two: " ++ Day05.solutionPartTwo input
   
