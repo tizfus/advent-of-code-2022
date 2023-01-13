@@ -13,20 +13,17 @@ data Engine =
     | CrateMover9001
 
 solutionPartOne :: String -> String
-solutionPartOne input = 
-    let (rawStacks, rawMovements) = readInput input
-    in 
-        prettify $ moveAll
-            CrateMover9000
-            (readMovements rawMovements)
-            (readStacks rawStacks)
+solutionPartOne = run CrateMover9000
 
 solutionPartTwo :: String -> String
-solutionPartTwo input = 
+solutionPartTwo = run CrateMover9001
+
+run :: Engine -> String -> String
+run engine input = 
     let (rawStacks, rawMovements) = readInput input
     in 
         prettify $ moveAll
-            CrateMover9001
+            engine
             (readMovements rawMovements)
             (readStacks rawStacks)
 
@@ -47,7 +44,10 @@ readMovements = map readMovement
 
 readMovement :: String -> Move
 readMovement raw =
-    let [count, stackFrom, stackTo] = map read $ filter (all Char.isDigit) $ words raw
+    let [count, stackFrom, stackTo] = 
+            map read 
+            $ filter (all Char.isDigit) 
+            $ words raw
     in Move count (stackFrom - 1) (stackTo - 1)
 
 
@@ -57,15 +57,23 @@ moveAll engine (movement:movements) stacks =
     moveAll engine movements $ move engine movement stacks
 
 move :: Engine -> Move -> Stacks -> Stacks
-move engine (Move count stackFrom stackTo) stacks =
-    let creates = take count (stacks !! stackFrom)
-    in  mapIndexed (\index stack ->
-            if index == stackFrom
-                then drop count stack
-                else if index == stackTo
-                    then addCreate engine creates stack
-                    else stack
-        ) stacks
+move engine (Move count stackFromIndex stackToIndex) stacks =
+    let 
+        (creates, updatedStackFrom) = remove count (stacks !! stackFromIndex)
+        updatedStackTo = addCreate engine creates (stacks !! stackToIndex)
+    in  
+        replace stackToIndex updatedStackTo
+        $ replace stackFromIndex updatedStackFrom
+        $ stacks
+
+remove :: Int -> [a] -> ([a], [a])
+remove = splitAt
+
+replace :: Int -> a -> [a] -> [a]
+replace _ _ [] = []
+replace 0 newValue (value:list) = newValue : list
+replace index newValue (value:list) = value : (replace (index -1) newValue list)
+    
 
 addCreate :: Engine -> [Create] -> Stack -> Stack
 addCreate CrateMover9000 crates = (++) $ reverse crates 
@@ -91,6 +99,3 @@ readCreate value =
     case value !! 1 of
         ' '-> Nothing
         create -> Just [create]
-
-mapIndexed :: (Int -> a -> b) -> [a] -> [b]
-mapIndexed mapper = map (uncurry mapper) . zip [0..]
