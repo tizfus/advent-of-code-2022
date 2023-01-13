@@ -7,19 +7,24 @@ tests :: Spec
 tests = 
     describe "Day 05:" $ do
         describe "Part ONE:" $ do
-            it "recognizes single row" $ do
+            it "read stack without move information" $ do
                 Day05.solutionPartOne "    [D]    \
-                                    \\n 1   2   3 \
-                                    \\n\
-                                    \\nmove 1 from 2 to 1" 
+                                    \\n 1   2   3 " 
                     `shouldBe` "[[],[\"D\"],[]]"
 
                 Day05.solutionPartOne "    [D]     [C]\
                                     \\n 1   2   3   4 "
                     `shouldBe` "[[],[\"D\"],[],[\"C\"]]"
 
-            it "reads multiple rows" $ do
+            it "read stacks without move information" $ do
                 Day05.solutionPartOne "    [D]    \
                                     \\n[N] [C]    \
                                     \\n 1   2   3 "
                     `shouldBe` "[[\"N\"],[\"D\",\"C\"],[]]"
+
+            it "moves single container" $ do
+                Day05.solutionPartOne "    [D]    \
+                                    \\n 1   2   3 \
+                                    \\n\
+                                    \\nmove 1 from 2 to 1" 
+                    `shouldBe` "[[\"D\"],[],[]]"
