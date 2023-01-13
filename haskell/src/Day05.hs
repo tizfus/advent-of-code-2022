@@ -7,6 +7,12 @@ type Create = String
 type Stack = [Create]
 type Stacks = [Stack]
 
+data Move = Move {
+    count :: Int,
+    stackFrom :: Int,
+    stackTo :: Int
+}
+
 solutionPartOne :: String -> String
 solutionPartOne input = 
     let (rawStacks, positionsInfo) = readInput input
@@ -20,22 +26,36 @@ readInput =
 
 changePosition :: [String] -> Stacks -> Stacks
 changePosition [] stacks = stacks
-changePosition (movements:_) stacks = 
-    let [count, stackFrom, stackTo] = map read $ filter (all Char.isDigit) $ words movements
-        containers = take count $ stacks !! (stackFrom - 1)
-    in [containers, [], [] ]
+changePosition (movement:_) stacks = 
+    applyMove (readMove movement) stacks
+
+applyMove :: Move -> Stacks -> Stacks
+applyMove (Move count stackFrom stackTo) stacks =
+    let creates = take count (stacks !! stackFrom)
+    in mapIndexed (\index stack ->
+            if index == stackFrom
+                then drop count stack
+                else if index == stackTo
+                    then creates ++ stack
+                    else stack
+        ) stacks
+
+readMove :: String -> Move
+readMove raw =
+    let [count, stackFrom, stackTo] = map read $ filter (all Char.isDigit) $ words raw
+    in Move count (stackFrom - 1) (stackTo - 1)
 
 readStacks :: [String] -> Stacks
 readStacks =  readStacks' 0 . init
     where
         readStacks' :: Int -> [String] -> Stacks
         readStacks' index raw =
-            case readStack' index raw of
+            case readStack index raw of
                 Nothing -> []
                 Just stack -> stack : (readStacks' (index + 1) raw)
 
-readStack' :: Int -> [String] -> Maybe Stack
-readStack' index raw =
+readStack :: Int -> [String] -> Maybe Stack
+readStack index raw =
     case map (drop (index * 4)) raw of
         ("":_) -> Nothing
         rawCreates -> Just $ Maybe.catMaybes $ map readCreate rawCreates
@@ -49,3 +69,6 @@ readCreate value =
     case value !! 1 of
         ' '-> Nothing
         create -> Just [create]
+
+mapIndexed :: (Int -> a -> b) -> [a] -> [b]
+mapIndexed mapper = map (uncurry mapper) . zip [0..]
