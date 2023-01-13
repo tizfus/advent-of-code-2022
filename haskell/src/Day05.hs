@@ -38,11 +38,8 @@ readMovements = map readMovement
 
 moveAll :: [Move] -> Stacks -> Stacks
 moveAll [] stacks = stacks
-moveAll movements stacks = 
-    foldr 
-        move 
-        stacks 
-        movements
+moveAll (movement:movements) stacks = 
+    moveAll movements $ move movement stacks
 
 move :: Move -> Stacks -> Stacks
 move (Move count stackFrom stackTo) stacks =
