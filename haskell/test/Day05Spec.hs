@@ -7,10 +7,19 @@ tests :: Spec
 tests = 
     describe "Day 05:" $ do
         describe "Part ONE:" $ do
-            it "recognizes first row" $ do
-                Day05.solutionPartOne "    [D]    " `shouldBe` "[[],[\"D\"],[]]"
-                Day05.solutionPartOne "    [D]     [C]" `shouldBe` "[[],[\"D\"],[],[\"C\"]]"
-            
+            it "recognizes single row" $ do
+                Day05.solutionPartOne "    [D]    \
+                                    \\n 1   2   3 \
+                                    \\n\
+                                    \\nmove 1 from 2 to 1" 
+                    `shouldBe` "[[],[\"D\"],[]]"
+
+                Day05.solutionPartOne "    [D]     [C]\
+                                    \\n 1   2   3   4 "
+                    `shouldBe` "[[],[\"D\"],[],[\"C\"]]"
+
             it "reads multiple rows" $ do
-                Day05.solutionPartOne "    [D]    \n[N] [C]    "
+                Day05.solutionPartOne "    [D]    \
+                                    \\n[N] [C]    \
+                                    \\n 1   2   3 "
                     `shouldBe` "[[\"N\"],[\"D\",\"C\"],[]]"

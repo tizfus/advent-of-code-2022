@@ -1,10 +1,18 @@
 module Day05 where
 
 solutionPartOne :: String -> String
-solutionPartOne = show . readStacks
+solutionPartOne input = 
+    let (rawStacks, movements) = readInput input
+    in show $ readStacks rawStacks
 
-readStacks :: String -> [[String]]
-readStacks =  readStack 0 . lines
+readInput :: String -> ([String], [String])
+readInput = 
+    fmap tail 
+    . break isEmpty 
+    . lines 
+
+readStacks :: [String] -> [[String]]
+readStacks =  readStack 0 . init
 
 readStack :: Int -> [String] -> [[String]]
 readStack index raw =
@@ -12,10 +20,13 @@ readStack index raw =
         then []
         else (readCreate values) : (readStack (index + 1) raw)
     where
-        hasEmptyValue = any (""==)
+        hasEmptyValue = any isEmpty
         values = map takeValues raw
         takeValues = take 4 . drop (index * 4)
-    
+
+isEmpty :: String -> Bool
+isEmpty "" = True
+isEmpty _ = False
 
 readCreate :: [String] -> [String]
 readCreate = 
