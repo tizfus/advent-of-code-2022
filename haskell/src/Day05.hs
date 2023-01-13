@@ -7,16 +7,18 @@ type Create = String
 type Stack = [Create]
 type Stacks = [Stack]
 
-data Move = 
-    Move9000 Int Int Int
-    | Move9001 Int Int Int
+data Move = Move Int Int Int
+data Engine =
+    CrateMover9000 
+    | CrateMover9001
 
 solutionPartOne :: String -> String
 solutionPartOne input = 
     let (rawStacks, rawMovements) = readInput input
     in 
         prettify $ moveAll
-            (readMovements Move9000 rawMovements)
+            CrateMover9000
+            (readMovements rawMovements)
             (readStacks rawStacks)
 
 solutionPartTwo :: String -> String
@@ -24,7 +26,8 @@ solutionPartTwo input =
     let (rawStacks, rawMovements) = readInput input
     in 
         prettify $ moveAll
-            (readMovements Move9001 rawMovements)
+            CrateMover9001
+            (readMovements rawMovements)
             (readStacks rawStacks)
 
 prettify :: Stacks -> String
@@ -39,40 +42,34 @@ readInput =
     . break null 
     . lines 
 
-readMovements :: (Int -> Int -> Int -> Move) -> [String] -> [Move]
-readMovements _ [] = []
-readMovements builder (movement:movements) = 
-    let [count, stackFrom, stackTo] = 
-            map read 
-            $ filter (all Char.isDigit) 
-            $ words movement
-    in builder count (stackFrom - 1) (stackTo - 1)
-        : readMovements builder movements
+readMovements :: [String] -> [Move]
+readMovements = map readMovement
 
-moveAll :: [Move] -> Stacks -> Stacks
-moveAll [] stacks = stacks
-moveAll (movement:movements) stacks = 
-    moveAll movements $ move movement stacks
+readMovement :: String -> Move
+readMovement raw =
+    let [count, stackFrom, stackTo] = map read $ filter (all Char.isDigit) $ words raw
+    in Move count (stackFrom - 1) (stackTo - 1)
 
-move :: Move -> Stacks -> Stacks
-move (Move9001 count stackFrom stackTo) stacks =
+
+moveAll :: Engine -> [Move] -> Stacks -> Stacks
+moveAll _ [] stacks = stacks
+moveAll engine (movement:movements) stacks = 
+    moveAll engine movements $ move engine movement stacks
+
+move :: Engine -> Move -> Stacks -> Stacks
+move engine (Move count stackFrom stackTo) stacks =
     let creates = take count (stacks !! stackFrom)
-    in mapIndexed (\index stack ->
+    in  mapIndexed (\index stack ->
             if index == stackFrom
                 then drop count stack
                 else if index == stackTo
-                    then creates ++ stack
+                    then addCreate engine creates stack
                     else stack
         ) stacks
-move (Move9000 count stackFrom stackTo) stacks =
-    let creates = take count (stacks !! stackFrom)
-    in mapIndexed (\index stack ->
-            if index == stackFrom
-                then drop count stack
-                else if index == stackTo
-                    then (reverse creates) ++ stack
-                    else stack
-        ) stacks
+
+addCreate :: Engine -> [Create] -> Stack -> Stack
+addCreate CrateMover9000 crates = (++) $ reverse crates 
+addCreate CrateMover9001 crates = (crates ++)
 
 readStacks :: [String] -> Stacks
 readStacks =  readStacks' 0 . init
