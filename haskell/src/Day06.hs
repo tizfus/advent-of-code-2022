@@ -3,14 +3,18 @@ module Day06 where
 
 solutionPartOne :: String -> String
 solutionPartOne = 
-    show . chunks 0
+    show . (chunks 4 0)
 
-chunks :: Int -> String -> Int
-chunks index buffer =
-    let chunk = take 4 buffer
+solutionPartTwo :: String -> String
+solutionPartTwo = 
+    show . (chunks 14 0)
+
+chunks :: Int -> Int -> String -> Int
+chunks length index buffer =
+    let chunk = take length buffer
     in case areCharsUnique chunk of
-        True -> index + 4
-        False -> chunks (index + 1) (tail buffer)
+        True -> index + length
+        False -> chunks length (index + 1) (tail buffer)
 
 areCharsUnique :: String -> Bool
 areCharsUnique "" = False
