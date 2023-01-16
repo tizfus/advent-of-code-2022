@@ -17,7 +17,6 @@ chunks length index buffer =
         False -> chunks length (index + 1) (tail buffer)
 
 areCharsUnique :: String -> Bool
-areCharsUnique "" = False
-areCharsUnique [char] = True
+areCharsUnique "" = True
 areCharsUnique (char:remainder) = 
     (not $ any (==char) remainder) && areCharsUnique remainder
