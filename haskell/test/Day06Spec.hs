@@ -7,5 +7,5 @@ tests :: Spec
 tests = 
     describe "Day 06:" $ do
         describe "Part ONE:" $ do
-            it "return the buffer by chunks of four with index" $ do
-                Day06.solutionPartOne "abcdef" `shouldBe` "[(\"abcd\",4),(\"bcde\",5),(\"cdef\",6)]"
+            it "return the chunk without any repeated chars" $ do
+                Day06.solutionPartOne "abbade" `shouldBe` "(\"bade\",6)"
