@@ -20,3 +20,10 @@ tests =
             it "return the index of a chunk of 14 chars without any repeated chars" $ do
                 Day06.solutionPartTwo "abcdefghijklmaopqrstuvwxyz" `shouldBe` "15"
 
+            it "example cases" $ do
+                
+                Day06.solutionPartTwo "mjqjpqmgbljsphdztnvjfqwrcgsmlb" `shouldBe` "19"
+                Day06.solutionPartTwo "bvwbjplbgvbhsrlpgdmjqwftvncz" `shouldBe` "23"
+                Day06.solutionPartTwo "nppdvjthqldpwncqszvftbrmjlhg" `shouldBe` "23"
+                Day06.solutionPartTwo "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg" `shouldBe` "29"
+                Day06.solutionPartTwo "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw" `shouldBe` "26"                
