@@ -3,7 +3,8 @@ module Day06 where
 
 solutionPartOne :: String -> String
 solutionPartOne = 
-    show 
+    show
+    . snd
     . head
     . filter (\(chunk,index) -> areUniqChars chunk)
     . chunks 0

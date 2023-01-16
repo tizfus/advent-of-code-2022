@@ -7,5 +7,5 @@ tests :: Spec
 tests = 
     describe "Day 06:" $ do
         describe "Part ONE:" $ do
-            it "return the chunk without any repeated chars" $ do
-                Day06.solutionPartOne "abbade" `shouldBe` "(\"bade\",6)"
+            it "return the index of the chunk without any repeated chars" $ do
+                Day06.solutionPartOne "abbade" `shouldBe` "6"
