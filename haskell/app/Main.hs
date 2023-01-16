@@ -4,46 +4,31 @@ import qualified Day03
 import qualified Day04
 import qualified Day05
 
+import Control.Monad (forM_)
+
+type Solution = (String -> String)
+data Day = Day {
+  numberDay :: String,
+  solutionPartOne :: Solution,
+  solutionPartTwo :: Solution
+}
+
+
+
+
 main :: IO ()
 main = do
-    day01
-    day02
-    day03
-    day04
-    day05
+    [
+        Day "01" Day01.solutionPartOne Day01.solutionPartTwo,
+        Day "02" Day02.solutionPartOne Day02.solutionPartTwo,
+        Day "03" Day03.solutionPartOne Day03.solutionPartTwo,
+        Day "04" Day04.solutionPartOne Day04.solutionPartTwo,
+        Day "05" Day05.solutionPartOne Day05.solutionPartTwo
+        ] `forM_` printSolutions
 
-day01 :: IO ()
-day01 = do
-  input <- readFile "./app/input/day01"
-  putStrLn $ "Day 01: "
-  putStrLn $ "    Part One: " ++ Day01.solutionPartOne input
-  putStrLn $ "    Part Two: " ++ Day01.solutionPartTwo input
-
-day02 :: IO ()
-day02 = do
-  input <- readFile "./app/input/day02"
-  putStrLn $ "Day 02: "
-  putStrLn $ "    Part One: " ++ Day02.solutionPartOne input
-  putStrLn $ "    Part Two: " ++ Day02.solutionPartTwo input
-
-day03 :: IO ()
-day03 = do
-  input <- readFile "./app/input/day03"
-  putStrLn $ "Day 03: "
-  putStrLn $ "    Part One: " ++ Day03.solutionPartOne input
-  putStrLn $ "    Part Two: " ++ Day03.solutionPartTwo input
-
-day04 :: IO ()
-day04 = do
-  input <- readFile "./app/input/day04"
-  putStrLn $ "Day 04: "
-  putStrLn $ "    Part One: " ++ Day04.solutionPartOne input
-  putStrLn $ "    Part Two: " ++ Day04.solutionPartTwo input
-
-day05 :: IO ()
-day05 = do
-  input <- readFile "./app/input/day05"
-  putStrLn $ "Day 05: "
-  putStrLn $ "    Part One: " ++ Day05.solutionPartOne input
-  putStrLn $ "    Part Two: " ++ Day05.solutionPartTwo input
-  
+printSolutions :: Day -> IO ()
+printSolutions (Day numberDay solutionPartOne solutionPartTwo) = do
+    input <- readFile ("./app/input/day" ++ numberDay )
+    putStrLn $ ("Day " ++ numberDay ++ ":")
+    putStrLn $ "    Part One: " ++ solutionPartOne input
+    putStrLn $ "    Part Two: " ++ solutionPartTwo input
