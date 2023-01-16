@@ -3,6 +3,7 @@ import qualified Day02
 import qualified Day03
 import qualified Day04
 import qualified Day05
+import qualified Day06
 
 import Control.Monad (forM_)
 
@@ -23,7 +24,8 @@ main = do
         Day "02" Day02.solutionPartOne Day02.solutionPartTwo,
         Day "03" Day03.solutionPartOne Day03.solutionPartTwo,
         Day "04" Day04.solutionPartOne Day04.solutionPartTwo,
-        Day "05" Day05.solutionPartOne Day05.solutionPartTwo
+        Day "05" Day05.solutionPartOne Day05.solutionPartTwo,
+        Day "06" Day06.solutionPartOne (const "TODO")
         ] `forM_` printSolutions
 
 printSolutions :: Day -> IO ()
