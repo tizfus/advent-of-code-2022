@@ -25,7 +25,7 @@ main = do
         Day "03" Day03.solutionPartOne Day03.solutionPartTwo,
         Day "04" Day04.solutionPartOne Day04.solutionPartTwo,
         Day "05" Day05.solutionPartOne Day05.solutionPartTwo,
-        Day "06" Day06.solutionPartOne (const "TODO")
+        Day "06" Day06.solutionPartOne Day06.solutionPartTwo
         ] `forM_` printSolutions
 
 printSolutions :: Day -> IO ()
