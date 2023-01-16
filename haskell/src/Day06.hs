@@ -2,9 +2,9 @@ module Day06 where
 
 
 solutionPartOne :: String -> String
-solutionPartOne = show . chunks
+solutionPartOne = show . chunks 0
 
-chunks :: String -> [String]
-chunks buffer
-    | length buffer <= 4 = [buffer]
-    | otherwise = take 4 buffer : chunks (tail buffer)
+chunks :: Int -> String -> [(String, Int)]
+chunks index buffer
+    | length buffer <= 4 = [(buffer, index + 4)]
+    | otherwise = (take 4 buffer, index + 4) : (chunks (index + 1) (tail buffer))
